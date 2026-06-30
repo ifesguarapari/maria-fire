@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maria Fire</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <section id="startScreen" class="start-screen" aria-labelledby="startTitle">
+      <div class="start-content">
+        <div class="start-portrait">
+          <img src="images/son.png" alt="Filho de Maria" />
+        </div>
+        <div class="start-copy">
+          <p class="start-kicker">Inspirado no desfecho de Maria, de Conceição Evaristo</p>
+          <h1 id="startTitle">Maria Fire</h1>
+          <p>
+            Depois do ônibus, a cidade continuou andando como se nada tivesse acontecido. O filho de Maria,
+            porém, ficou parado diante de uma ausência que ninguém podia explicar por ele. A mãe, arrancada
+            pela violência e pela mentira coletiva, virou memória, ferida e pergunta.
+          </p>
+          <p>
+            Nesta continuação criada para o jogo, a revolta dele se transforma em estratégia. Cada comando em
+            Python ajuda o Filho de Maria a ler o território, pensar antes de agir e enfrentar os assassinos que
+            tentaram apagar a história de sua mãe.
+          </p>
+          <button id="startButton" class="start-button" type="button">Começar</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="app" class="app-shell hidden" aria-hidden="true">
+      <header class="app-header">
+        <div class="brand-block">
+          <img class="brand-image" src="images/son.png" alt="Filho de Maria" />
+          <div class="brand-copy">
+            <h1>Maria Fire</h1>
+            <p>Aprenda Python ajudando o Filho de Maria a vingar a morte da mãe.</p>
+          </div>
+        </div>
+        <div class="progress-block" aria-live="polite">
+          <strong id="progressSummary">0/10 fases concluídas</strong>
+          <nav id="levelNav" class="level-nav" aria-label="Fases"></nav>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="info-panel" aria-labelledby="levelTitle">
+          <div class="panel-heading">
+            <div>
+              <p id="levelKicker" class="kicker">Fase 1</p>
+              <h2 id="levelTitle">Carregando...</h2>
+            </div>
+            <span id="lineGoal" class="line-goal"></span>
+          </div>
+
+          <section class="info-block" aria-labelledby="objectiveTitle">
+            <h3 id="objectiveTitle">Objetivo</h3>
+            <p id="objectiveText"></p>
+          </section>
+
+          <section class="info-block" aria-labelledby="conceptTitle">
+            <h3 id="conceptTitle">Conceito</h3>
+            <p id="conceptText"></p>
+          </section>
+
+          <section class="info-block" aria-labelledby="functionTitle">
+            <h3 id="functionTitle">Função</h3>
+            <p id="functionText"></p>
+          </section>
+
+          <section class="info-block" aria-labelledby="exampleTitle">
+            <h3 id="exampleTitle">Exemplo</h3>
+            <pre><code id="exampleCode"></code></pre>
+          </section>
+
+          <section class="info-block" aria-labelledby="strategyTitle">
+            <h3 id="strategyTitle">Estratégia</h3>
+            <p id="strategyText"></p>
+          </section>
+
+          <section class="info-block" aria-labelledby="descriptionTitle">
+            <h3 id="descriptionTitle">Descrição</h3>
+            <p id="descriptionText"></p>
+          </section>
+
+          <section class="info-block" aria-labelledby="commandsTitle">
+            <h3 id="commandsTitle">Comandos</h3>
+            <ul id="commandsList" class="command-list"></ul>
+          </section>
+        </section>
+
+        <section class="code-panel" aria-label="Editor de código">
+          <div class="toolbar" role="toolbar" aria-label="Controles do editor">
+            <button id="runButton" type="button" aria-label="Executar o código">Executar</button>
+            <button id="hintButton" type="button" aria-label="Aplicar sugestão">Sugestão</button>
+            <button id="lessonButton" type="button" class="secondary" aria-label="Rever prévia da fase">
+              Rever prévia
+            </button>
+          </div>
+
+          <div id="editor" aria-label="Editor Python"></div>
+          <div
+            id="messages"
+            class="message-strip execution-result"
+            aria-live="polite"
+            aria-label="Execução e resultado"
+          ></div>
+
+          <section
+            id="opponentPrograms"
+            class="opponent-programs hidden"
+            aria-labelledby="opponentProgramsTitle"
+          >
+            <div class="opponent-programs-header">
+              <p class="kicker">Fase 10</p>
+              <h3 id="opponentProgramsTitle">Códigos dos adversários</h3>
+              <p id="opponentProgramsSuggestion"></p>
+            </div>
+            <div id="opponentProgramsList" class="opponent-programs-list"></div>
+          </section>
+        </section>
+
+        <section class="arena-panel" aria-labelledby="arenaTitle">
+          <div class="panel-heading">
+            <div>
+              <p class="kicker">Território</p>
+              <h2 id="arenaTitle">Simulação</h2>
+            </div>
+            <div id="statusBadge" class="status-badge">Não executada</div>
+          </div>
+
+          <canvas id="arenaCanvas" aria-label="Território da fase" tabindex="0"></canvas>
+
+          <div class="arena-controls">
+            <button
+              id="arenaFullscreenButton"
+              type="button"
+              class="secondary"
+              aria-label="Expandir simulação para tela cheia"
+            >
+              Tela cheia
+            </button>
+          </div>
+
+          <div id="hud" class="hud" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="errorModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="errorModalTitle">
+      <div class="error-modal">
+        <div class="error-icon" aria-hidden="true">!</div>
+        <h2 id="errorModalTitle">Atenção</h2>
+        <p id="errorModalMessage">O programa encontrou um erro.</p>
+        <button id="closeErrorModal" class="modal-button" type="button">Entendi</button>
+      </div>
+    </div>
+
+    <div
+      id="confirmModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="confirmModalTitle"
+    >
+      <div class="confirm-modal">
+        <div class="confirm-icon" aria-hidden="true">!</div>
+        <h2 id="confirmModalTitle">Aplicar sugestão?</h2>
+        <p id="confirmModalMessage">A sugestão vai substituir o código atual. Deseja continuar?</p>
+        <div class="confirm-actions">
+          <button id="cancelConfirmModal" class="modal-button secondary" type="button">Cancelar</button>
+          <button id="acceptConfirmModal" class="modal-button" type="button">Aplicar sugestão</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="completionModal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="completionModalTitle"
+    >
+      <div class="completion-modal">
+        <div class="completion-icon" aria-hidden="true">✓</div>
+        <p id="completionModalKicker" class="completion-kicker">Fase concluída</p>
+        <h2 id="completionModalTitle">Parabéns!</h2>
+        <p id="completionModalMessage"></p>
+        <div id="completionConcepts" class="completion-concepts" aria-label="Conceitos aprendidos"></div>
+        <p id="completionMotivation" class="completion-motivation"></p>
+        <button id="continueCompletionModal" class="modal-button" type="button">
+          Ver prévia da próxima fase
+        </button>
+      </div>
+    </div>
+
+    <dialog id="lessonDialog" class="lesson-dialog" aria-labelledby="lessonDialogTitle">
+      <form method="dialog" class="lesson-content">
+        <div class="lesson-header">
+          <div>
+            <p id="lessonDialogKicker" class="kicker"></p>
+            <h2 id="lessonDialogTitle"></h2>
+          </div>
+          <button id="closeLessonButton" type="button" class="icon-button" aria-label="Fechar prévia">x</button>
+        </div>
+        <div id="lessonBody" class="lesson-body"></div>
+        <div class="lesson-actions">
+          <button id="startExerciseButton" type="button">Começar exercício</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
