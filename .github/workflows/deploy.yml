@@ -18,14 +18,16 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PAGES_TOKEN_AVAILABLE: ${{ secrets.PAGES_TOKEN != '' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -37,11 +39,24 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Pages setup notice
+        if: ${{ env.PAGES_TOKEN_AVAILABLE != 'true' }}
+        run: |
+          echo "::notice title=GitHub Pages::If the next step fails with Not Found, open Settings > Pages and set Source to GitHub Actions. To allow this workflow to enable Pages automatically, add a PAGES_TOKEN secret with Pages/admin write permission."
+
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        if: ${{ env.PAGES_TOKEN_AVAILABLE != 'true' }}
+        uses: actions/configure-pages@v6
+
+      - name: Setup Pages and enable site
+        if: ${{ env.PAGES_TOKEN_AVAILABLE == 'true' }}
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
+          token: ${{ secrets.PAGES_TOKEN }}
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -54,4 +69,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

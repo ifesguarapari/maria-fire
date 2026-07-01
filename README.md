@@ -53,6 +53,8 @@ O workflow fica em `.github/workflows/deploy.yml`. Em push para `main`, ele exec
 3. `npm run build`
 4. publicação de `dist` com as actions oficiais do GitHub Pages
 
+O workflow usa Node.js 24 e as versões atuais das actions oficiais de Pages. Antes do primeiro deploy, configure o repositório em `Settings > Pages > Source > GitHub Actions`. Como alternativa, crie um secret chamado `PAGES_TOKEN` com permissão administrativa/Pages para permitir que `actions/configure-pages` habilite o Pages automaticamente.
+
 O `base` do Vite é calculado dinamicamente a partir de `GITHUB_REPOSITORY`, então o projeto funciona tanto em desenvolvimento com `/` quanto no GitHub Pages em `/<nome-do-repositório>/`.
 
 ## Arquitetura

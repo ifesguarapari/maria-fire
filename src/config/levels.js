@@ -34,7 +34,7 @@ export const levels = [
       height: 100,
       player: { x: 20, y: 50, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-1", name: "Assassino de Maria", x: 80, y: 50, angle: 180, energy: 30, ai: "static" },
+        { id: "alvo-1", name: "Assassino", x: 80, y: 50, angle: 180, energy: 30, ai: "static" },
       ],
       obstacles: [],
     },
@@ -80,7 +80,7 @@ export const levels = [
       height: 100,
       player: { x: 50, y: 20, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-2", name: "Assassino de Maria", x: 50, y: 75, angle: 270, energy: 30, ai: "static" },
+        { id: "alvo-2", name: "Assassino", x: 50, y: 75, angle: 270, energy: 30, ai: "static" },
       ],
       obstacles: [],
     },
@@ -130,7 +130,7 @@ export const levels = [
       height: 100,
       player: { x: 36, y: 20, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-3", name: "Assassino de Maria", x: 40.24, y: 78, angle: 270, energy: 30, ai: "static" },
+        { id: "alvo-3", name: "Assassino", x: 40.24, y: 78, angle: 270, energy: 30, ai: "static" },
       ],
       obstacles: [
         { x: 0, y: 46, width: 39.5, height: 6 },
@@ -189,7 +189,7 @@ export const levels = [
       opponents: [
         {
           id: "alvo-4",
-          name: "Assassino de Maria",
+          name: "Assassino",
           xRange: [60, 74],
           y: 52,
           angle: 180,
@@ -241,7 +241,7 @@ export const levels = [
       height: 100,
       player: { x: 50, y: 25, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-5", name: "Assassino de Maria", x: 50, y: 78, angle: 270, energy: 30, ai: "static" },
+        { id: "alvo-5", name: "Assassino", x: 50, y: 78, angle: 270, energy: 30, ai: "static" },
       ],
       obstacles: [],
     },
@@ -294,7 +294,7 @@ export const levels = [
       opponents: [
         {
           id: "alvo-6",
-          name: "Assassino de Maria",
+          name: "Assassino",
           positions: [
             { x: 50, y: 82 },
             { x: 82, y: 50 },
@@ -351,7 +351,7 @@ export const levels = [
       height: 100,
       player: { x: 10, y: 50, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-7", name: "Assassino de Maria", x: 90, y: 50, angle: 180, energy: 30, ai: "static" },
+        { id: "alvo-7", name: "Assassino", x: 90, y: 50, angle: 180, energy: 30, ai: "static" },
       ],
       obstacles: [],
     },
@@ -398,7 +398,7 @@ export const levels = [
       height: 100,
       player: { x: 15, y: 35, angle: 0, energy: 100 },
       opponents: [
-        { id: "alvo-8", name: "Assassino de Maria", x: 84, y: 35, angle: 180, energy: 30, ai: "static" },
+        { id: "alvo-8", name: "Assassino", x: 84, y: 35, angle: 180, energy: 30, ai: "static" },
       ],
       obstacles: [],
     },
@@ -456,7 +456,7 @@ export const levels = [
       opponents: [
         {
           id: "rival-9",
-          name: "Assassino de Maria",
+          name: "Assassino",
           positions: [
             { x: 74, y: 72 },
             { x: 78, y: 28 },
