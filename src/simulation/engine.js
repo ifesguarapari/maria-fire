@@ -379,6 +379,9 @@ export class SimulationEngine {
         opponent.state = "mirando";
         this.opponentTryFire(opponent);
       }
+      if (opponent.ai === "skirmisher") {
+        this.updateSkirmisher(opponent);
+      }
       if (opponent.ai === "sentinel") {
         this.updateSentinel(opponent);
       }
@@ -416,6 +419,52 @@ export class SimulationEngine {
     opponent.state = "mirando";
     this.opponentTryFire(opponent);
     state.scanAngle = normalizeAngle(state.scanAngle + 5);
+  }
+
+  updateSkirmisher(opponent) {
+    const state = opponent.aiState;
+    state.lastEnergy ??= opponent.maxEnergy;
+    state.strafeSign ??= 1;
+    state.patrolAngle ??= opponent.angle;
+
+    if (opponent.energy < state.lastEnergy) {
+      state.lastEnergy = opponent.energy;
+      state.strafeSign *= -1;
+    }
+
+    const playerDistance = this.player.alive ? distanceBetween(opponent, this.player) : Infinity;
+    const hasSight = playerDistance <= SENSOR_RANGE && !this.isLineBlocked(opponent, this.player);
+
+    if (hasSight) {
+      const aimAngle = angleBetween(opponent, this.player);
+      opponent.angle = aimAngle;
+      opponent.state = "mirando";
+      this.opponentTryFire(opponent);
+
+      const strafeAngle = normalizeAngle(aimAngle + 90 * state.strafeSign);
+      opponent.angle = strafeAngle;
+      opponent.speed = playerDistance <= WEAPON_RANGE ? 34 : 20;
+      opponent.state = "andando";
+      this.updateMovement(opponent);
+      return;
+    }
+
+    opponent.angle = state.patrolAngle;
+    opponent.speed = 14;
+    opponent.state = "andando";
+    const previousSpeed = opponent.speed;
+    this.updateMovement(opponent);
+
+    if (
+      previousSpeed > 0 &&
+      (opponent.speed === 0 ||
+        opponent.x <= opponent.radius + 2 ||
+        opponent.x >= this.arena.width - opponent.radius - 2 ||
+        opponent.y <= opponent.radius + 2 ||
+        opponent.y >= this.arena.height - opponent.radius - 2)
+    ) {
+      state.patrolAngle = normalizeAngle(state.patrolAngle + 180);
+    }
   }
 
   updatePatrol(opponent) {

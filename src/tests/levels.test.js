@@ -111,6 +111,37 @@ describe("fases", () => {
     expect(evaluation.status).toBe("success");
   });
 
+  it("fase 9 usa adversário móvel e exige busca repetida", () => {
+    const level = levels.find((candidate) => candidate.id === "fase-09");
+    const engine = createSimulation(level, {
+      maxActions: 1000,
+      maxCycles: 320,
+    });
+
+    const firstDistance = engine.detectar(0);
+    expect(firstDistance).not.toBeNull();
+    expect(engine.atirar(0, firstDistance)).toBe(true);
+    engine.esperar(3);
+
+    expect(engine.detectar(0)).toBeNull();
+    const secondDistance = engine.detectar(15);
+    expect(secondDistance).not.toBeNull();
+    expect(engine.atirar(15, secondDistance)).toBe(true);
+
+    const code =
+      "turnos = 0\n" +
+      "while inimigos_ativos() > 0 and turnos < 8:\n" +
+      "    for angulo in range(0, 360, 15):\n" +
+      "        distancia = detectar(angulo)\n" +
+      "        if distancia is not None:\n" +
+      "            atirar(angulo, distancia)\n" +
+      "            esperar(3)\n" +
+      "            break\n" +
+      "    turnos = turnos + 1";
+    const evaluation = evaluateAttempt(level, engine.snapshot(), code);
+    expect(evaluation.status).toBe("success");
+  });
+
   it("fase 10 avança a batalha dos adversários mesmo sem comandos do aluno", () => {
     const level = levels.find((candidate) => candidate.id === "fase-10");
     const engine = createSimulation(level, {

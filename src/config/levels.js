@@ -426,23 +426,24 @@ export const levels = [
     title: "Estratégia combinada",
     type: "challenge",
     seed: 909,
-    objective: "Localize um adversário ativo, aproxime-se se necessário e ataque.",
-    concepts: ["sensores", "condicionais", "movimento", "energia"],
+    objective: "Acompanhe um adversário móvel, ataque, espere a recarga e procure de novo.",
+    concepts: ["sensores", "condicionais", "repetição", "recarga"],
     lesson: {
       programming:
         "Programas maiores combinam ideias pequenas: procurar, decidir, mover, esperar e agir.",
       python:
-        "Você pode usar for, if, while, detectar, mover, parar e atirar no mesmo programa.",
+        "Você pode usar while, for, if, detectar, esperar e atirar para repetir uma estratégia até a vitória.",
       strategy:
-        "Procure em vários ângulos. Quando encontrar, use a distância para decidir se precisa se aproximar antes do disparo.",
+        "Procure em vários ângulos. Quando encontrar, atire, espere a recarga e repita a busca, porque o Assassino muda de posição.",
       exampleCode:
-        "for angulo in range(0, 360, 45):\n" +
-        "    distancia = detectar(angulo)\n" +
-        "    if distancia is not None:\n" +
-        "        if distancia > 45:\n" +
-        "            mover(angulo, 25)\n" +
-        "            parar()\n" +
-        "        atirar(angulo, distancia)",
+        "turnos = 0\n" +
+        "while turnos < 3:\n" +
+        "    for angulo in range(0, 360, 30):\n" +
+        "        distancia = detectar(angulo)\n" +
+        "        if distancia is not None:\n" +
+        "            atirar(angulo, distancia)\n" +
+        "            break\n" +
+        "    turnos = turnos + 1",
       video: video(
         9,
         "estrategia-combinada",
@@ -464,26 +465,28 @@ export const levels = [
           ],
           angle: 180,
           energy: 45,
-          ai: "guard",
+          ai: "skirmisher",
         },
       ],
       obstacles: [],
     },
     starterCode:
-      "# Combine busca, decisão e movimento.\n# Uma solução fixa não deve ser confiável aqui.\n\n",
+      "# O Assassino se move depois de ser atacado.\n" +
+      "# Procure, atire, espere a recarga e procure novamente.\n\n",
     hintCode:
-      "for angulo in range(0, 360, 45):\n" +
-      "    distancia = detectar(angulo)\n" +
-      "    if distancia is not None:\n" +
-      "        if distancia > 45:\n" +
-      "            mover(angulo, 35)\n" +
-      "            esperar(3)  # CORRIGIR: ajuste a aproximação antes de parar\n" +
-      "            parar()\n" +
-      "        atirar(angulo, distancia)  # CORRIGIR: recalcule a distância após mover\n",
+      "turnos = 0\n" +
+      "while inimigos_ativos() > 0 and turnos < 4:\n" +
+      "    for angulo in range(0, 360, 45):  # CORRIGIR: use passos menores para acompanhar o alvo móvel\n" +
+      "        distancia = detectar(angulo)\n" +
+      "        if distancia is not None:\n" +
+      "            atirar(angulo, distancia)\n" +
+      "            esperar(1)  # CORRIGIR: espere tempo suficiente para a recarga\n" +
+      "            break\n" +
+      "    turnos = turnos + 1\n",
     goals: {
-      maxLines: 12,
+      maxLines: 10,
       maxActions: 80,
-      requiredCommands: ["detectar", "mover", "parar", "atirar"],
+      requiredCommands: ["detectar", "esperar", "atirar"],
     },
     success: {
       type: "defeat-target",

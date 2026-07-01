@@ -40,9 +40,10 @@ export const levelDemos = {
   "fase-09": [
     { command: "detectar", args: [0] },
     { command: "atirar", args: [0, LAST_RESULT] },
-    { command: "esperar", args: [4] },
+    { command: "esperar", args: [3] },
     { command: "detectar", args: [0] },
-    { command: "atirar", args: [0, LAST_RESULT] },
+    { command: "detectar", args: [15] },
+    { command: "atirar", args: [15, LAST_RESULT] },
   ],
   "fase-10": [
     { command: "detectar", args: [0] },
